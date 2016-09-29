@@ -25,5 +25,4 @@ public class WordCloudTest {
 		String result = baos.toString();
 		assertEquals(expected, result);
 	}
-
 }
