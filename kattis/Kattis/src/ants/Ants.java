@@ -37,6 +37,7 @@ public class Ants {
 			Pair<Integer,Integer> p2 = calculateMinMaxDuration(ants, varyFromThisAntOnwards + 1, poleLength);
 			int min = Math.min(p1.t, p2.t);
 			int max = Math.max(p1.u, p2.u);
+			System.err.println("so far: " + min + " " + max);
 			return new Pair<Integer, Integer>(min,max);
 		} else {
 			System.err.print("checking ant combi: ");			
@@ -67,7 +68,9 @@ public class Ants {
 								newAnts[antNo] = ant + 1;
 							} else {  //TODO model also the 1 -3 situation where they result in 2 -2 and then in -1 3.
 								if(oldAnts[antNo - 1] == -(ant + 1)) { // if the ant on our left is direct adjacent, and moving right
-									newAnts[antNo] = -ant; // same spot, but opposite direction						
+									newAnts[antNo] = -ant; // same spot, but opposite direction	
+								} else if (oldAnts[antNo - 1] == -ant) {
+									newAnts[antNo] = -ant + 1; // we WERE on same spot, but opposite direction, now bounced back and 1 further
 								} else {
 									newAnts[antNo] = ant + 1; // moved one more to the left e.g. -7 to -6
 								}
@@ -78,6 +81,8 @@ public class Ants {
 							} else {
 								if (oldAnts[antNo + 1] == -(ant+1)) { // the ant to our right is direct adjacent and moving left
 									newAnts[antNo] = -ant; // same spot, but opposite direction
+								} else if (oldAnts[antNo + 1] == -ant ) {
+									newAnts[antNo] = -ant + 1; // we WERE on same spot, but opposite direction, now bounced back and 1 further
 								} else {
 									newAnts[antNo] = ant + 1; // moved one more to the right, e.g. 7 to 8
 								}
@@ -90,7 +95,11 @@ public class Ants {
 					int newAntindex = 0;
 					for (int antNo = 0; antNo < newAnts.length; antNo++) {
 						if (newAnts[antNo] != 0 && newAnts[antNo] != poleLength) {
-							oldAnts[newAntindex++] = newAnts[antNo];
+							if (newAntindex < antsRemaining) {
+								oldAnts[newAntindex++] = newAnts[antNo];
+							} else {
+								System.err.println("bad stuff");
+							}
 						}
 					}
 				}
