@@ -12,8 +12,15 @@ import org.junit.Test;
 public class TimebombTest {
 
 	@Test
-	public void test() throws IOException {
-		System.setIn(Timebomb.class.getResourceAsStream("timebomb.1.in"));
+	public void testAllSets() throws IOException {
+		for (int test = 1; test <= 5; test++) {
+			System.err.println("running test " + test);
+			test("" + test);
+		}
+	}
+	
+	public void test(String testNo) throws IOException {
+		System.setIn(Timebomb.class.getResourceAsStream("timebomb." + testNo + ".in"));
 	
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		System.setOut(new PrintStream(baos));
@@ -21,7 +28,7 @@ public class TimebombTest {
 		Timebomb testObject= new Timebomb();
 		testObject.processInput();
 		
-		String expected = IOUtils.toString(Timebomb.class.getResourceAsStream("timebomb.1.ans"), "UTF-8"); 
+		String expected = IOUtils.toString(Timebomb.class.getResourceAsStream("timebomb." + testNo + ".ans"), "UTF-8"); 
 		String result = baos.toString();
 		assertEquals(expected, result);
 		System.err.print(result);

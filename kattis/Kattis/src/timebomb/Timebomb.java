@@ -30,13 +30,20 @@ public class Timebomb {
 			lineNumber++;
 		}		
 		scan.close();
-		
-		for (int digit = 0; digit < totalDigits; digit++) {
+
+		boolean allDigitsValid = true;
+		int codeValue = 0;
+		for (int digit = 0; allDigitsValid && (digit < totalDigits); digit++) {
 			StarChar c = new StarChar(digits[digit]);
-			System.err.println(digit + " " + c + " " + c.isValidDigit());
-			System.err.println("\n");
+			allDigitsValid = c.isValidDigit();
+			codeValue = 10 * codeValue + c.charValue;
+			System.err.print(c);
 		}
-		
+		if (allDigitsValid && (codeValue % 6 == 0)) {
+			System.out.print("BEER!!\n");
+		} else {	
+			System.out.print("BOOM!!\n");
+		}
 	}
 }
 
