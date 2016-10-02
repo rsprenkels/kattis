@@ -29,13 +29,23 @@ public class StarChar {
 			boolean foundDiff = false;
 			int line = -1;
 			while (!foundDiff && ++line < 5) {
-				foundDiff = chunck[line].equals(definedChars[charNo].chunck[line]);
+				String left = chunck[line];
+				String right = definedChars[charNo].chunck[line];
+				foundDiff = !(left.equals(right));
 			}
 			if (!foundDiff) {
 				return true;
 			}
 		}
 		return false;
+	}
+
+	public String toString() {
+		String res = "\n";
+		for(int line = 0; line < 5; line++) {
+			res += chunck[line] + "\n";
+		}		
+		return res;
 	}
 	
 	void setChunck (int line, String chunck) {
