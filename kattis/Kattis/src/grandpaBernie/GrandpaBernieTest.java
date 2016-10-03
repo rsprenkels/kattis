@@ -13,7 +13,7 @@ public class GrandpaBernieTest {
 
 	@Test
 	public void testAllSets() throws IOException {
-		for (int test = 1; test <= 2; test++) {
+		for (int test = 1; test <= 3; test++) {
 			System.err.println("running test " + test);
 			test("" + test);
 		}
@@ -25,8 +25,7 @@ public class GrandpaBernieTest {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		System.setOut(new PrintStream(baos));
 		
-		GrandpaBernie testObject= new GrandpaBernie();
-		testObject.processInput();
+		GrandpaBernie.main(null);
 		
 		String expected = IOUtils.toString(GrandpaBernie.class.getResourceAsStream(testFile + ".ans"), "UTF-8"); 
 		String result = baos.toString();

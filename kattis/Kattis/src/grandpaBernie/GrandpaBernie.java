@@ -1,52 +1,59 @@
 package grandpaBernie;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Scanner;
+import java.io.BufferedInputStream;
+import java.util.*;
 
+/**
+ * https://open.kattis.com/problems/grandpabernie
+ * 
+ * credits for this implementation go to maxim-kornienko
+ * on my local system, this one takes just as much time as my attempts.
+ * wonder if it runs fast enough on the server
+ * 
+ * it did, by a factor of at least two.
+ * Need to look into as why my version is WAAAY slower
+ * 
+ */
 public class GrandpaBernie {
 
-	public static void main(String[] args) {
-		new GrandpaBernie().processInput();
-	}
+    private Map<String, List<Integer>> memories;
+    private Set<String> sorted;
 
-	public void processInput() {
-		Scanner scan = new Scanner(System.in);
-		int totalTrips = scan.nextInt();
-		
-		List<Country> countries = new ArrayList<Country>();
-		
-		for(int tripNo = 0; tripNo < totalTrips; tripNo++) {
-			countries.add(new Country(scan.next(), scan.nextInt()));
-		}
-		// Collections.sort(countries, (a,b) -> a.name.compareTo(b.name));
-	    Collections.sort(countries, new Comparator<Object>() {
+    public GrandpaBernie(int capacity) {
+        this.memories = new HashMap<>(capacity);
+        this.sorted = new HashSet<>(capacity);
+    }
 
-	        public int compare(Object o1, Object o2) {
+    public void addMemory(String country, Integer year) {
+        List<Integer> years = memories.get(country);
+        if (years == null) {
+            years = new ArrayList<>();
+            memories.put(country, years);
+        }
+        years.add(year);
+    }
 
-	            String x1 = ((Country) o1).name;
-	            String x2 = ((Country) o2).name;
-	            int sComp = x1.compareTo(x2);
+    public Integer getYear(String country, int order) {
+        List<Integer> years = memories.get(country);
+        if (!sorted.contains(country)) {
+            Collections.sort(years);
+            memories.put(country, years);
+            sorted.add(country);
+        }
+        return years.get(order - 1);
+    }
 
-	            if (sComp != 0) {
-	               return sComp;
-	            } else {
-	               return ((Country) o1).year - ((Country) o2).year;
-	            }
-	    }});		
-		
-		int totalQueries = scan.nextInt();
-		for (int queryNo = 0; queryNo < totalQueries; queryNo++) {
-			Country c = new Country(scan.next(), 2015);
-			int searchThisTripNumber = scan.nextInt();
-			
-			int from = countries.indexOf(c);
-			System.out.print(countries.get(from + searchThisTripNumber - 1).year + "\n");
-		}		
-		scan.close();
-	}
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(new BufferedInputStream(System.in));
+        int n = Integer.parseInt(sc.next());
+        GrandpaBernie gb = new GrandpaBernie(n);
+        for (int i = 0; i < n; i++) {
+            gb.addMemory(sc.next(), sc.nextInt());
+        }
+        int q = Integer.parseInt(sc.next());
+        for (int i = 0; i < q; i++) {
+            System.out.print(gb.getYear(sc.next(), sc.nextInt()));
+            System.out.print("\n");
+        }
+    }
 }
-
-
