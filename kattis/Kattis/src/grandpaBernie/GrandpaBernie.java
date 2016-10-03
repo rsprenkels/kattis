@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 public class GrandpaBernie {
 
@@ -22,7 +21,21 @@ public class GrandpaBernie {
 		for(int tripNo = 0; tripNo < totalTrips; tripNo++) {
 			countries.add(new Country(scan.next(), scan.nextInt()));
 		}
-		Collections.sort(countries, (a,b) -> a.name.compareTo(b.name));
+		// Collections.sort(countries, (a,b) -> a.name.compareTo(b.name));
+	    Collections.sort(countries, new Comparator<Object>() {
+
+	        public int compare(Object o1, Object o2) {
+
+	            String x1 = ((Country) o1).name;
+	            String x2 = ((Country) o2).name;
+	            int sComp = x1.compareTo(x2);
+
+	            if (sComp != 0) {
+	               return sComp;
+	            } else {
+	               return ((Country) o1).year - ((Country) o2).year;
+	            }
+	    }});		
 		
 		int totalQueries = scan.nextInt();
 		for (int queryNo = 0; queryNo < totalQueries; queryNo++) {
@@ -30,12 +43,8 @@ public class GrandpaBernie {
 			int searchThisTripNumber = scan.nextInt();
 			
 			int from = countries.indexOf(c);
-			int to = countries.lastIndexOf(c);
-			List<Country> justOneCountry = countries.subList(from, to + 1);
-			justOneCountry.sort((a,b) -> a.year - b.year);
-			System.out.print(justOneCountry.get(searchThisTripNumber - 1).year + "\n");
-		}
-		
+			System.out.print(countries.get(from + searchThisTripNumber - 1).year + "\n");
+		}		
 		scan.close();
 	}
 }
