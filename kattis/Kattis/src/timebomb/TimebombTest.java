@@ -13,7 +13,7 @@ public class TimebombTest {
 
 	@Test
 	public void testAllSets() throws IOException {
-		for (int test = 1; test <= 5; test++) {
+		for (int test = 1; test <= 6; test++) {
 			System.err.println("running test " + test);
 			test("" + test);
 		}
@@ -30,7 +30,7 @@ public class TimebombTest {
 		
 		String expected = IOUtils.toString(Timebomb.class.getResourceAsStream("timebomb." + testNo + ".ans"), "UTF-8"); 
 		String result = baos.toString();
+		System.err.print(result); 
 		assertEquals(expected, result);
-		System.err.print(result);
 	}
 }

@@ -17,12 +17,10 @@ public class Timebomb {
 				
 		while (scan.hasNextLine()) {
 			String oneLine = scan.nextLine() + " ";
-			System.err.println("[" + oneLine + "]");
 			int digit = 0;
 			while (oneLine.length() >= 3) {
 				String chunck = oneLine.substring(0, 3);
 				oneLine = oneLine.substring(4);
-				System.err.println("chunck["+ chunck + "]");
 				digits[digit][lineNumber] = chunck;
 				digit++;
 			}
@@ -37,8 +35,8 @@ public class Timebomb {
 			StarChar c = new StarChar(digits[digit]);
 			allDigitsValid = c.isValidDigit();
 			codeValue = 10 * codeValue + c.charValue;
-			System.err.print(c);
 		}
+		System.err.print("code: " + codeValue + "  ");
 		if (allDigitsValid && (codeValue % 6 == 0)) {
 			System.out.print("BEER!!\n");
 		} else {	
