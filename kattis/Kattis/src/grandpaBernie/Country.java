@@ -17,7 +17,15 @@ public class Country implements Comparable<Object> {
 	@Override
 	public int compareTo(Object arg0) {
 		Country otherCountry = (Country) arg0;
-		int nameDiff = name.compareTo(otherCountry.name);
-		return nameDiff != 0 ? nameDiff : year - otherCountry.year;
+		return  name.compareTo(otherCountry.name);
 	}
+	
+	@Override
+    public boolean equals(Object o)
+    {
+        if(o instanceof Country && ((Country)o).name.equals(this.name))
+            return true;
+        else
+            return false;   
+    }
 }
