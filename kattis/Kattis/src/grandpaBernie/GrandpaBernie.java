@@ -55,5 +55,6 @@ public class GrandpaBernie {
             System.out.print(gb.getYear(sc.next(), sc.nextInt()));
             System.out.print("\n");
         }
+        sc.close();
     }
 }
