@@ -3,6 +3,7 @@ package primes;
 import java.io.BufferedInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.BitSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
@@ -48,10 +49,11 @@ public class Primes {
 			scan.nextLine();
 			boolean printedAValue = false;
 
-			Sieve sieve = new Primes().new Sieve(minValue, maxValue);
+			BitSet sieve = new BitSet(maxValue);
+			sieve.clear();
 			int longestProduct = Math.max(1,(int) Math.ceil(Math.log10(maxValue) / Math.log10(peculiarPrimes[0])));
 			for (int prodLen = 1; prodLen <= longestProduct; prodLen++) {
-				sieveProducts(prodLen, 1, sieve, peculiarPrimes);
+				sieveProducts(prodLen, 1, sieve, peculiarPrimes, maxValue);
 			}
 			
 			if (minValue == 1) {
@@ -59,7 +61,7 @@ public class Primes {
 				printedAValue = true;
 			}
 			for (int valIndex = Math.max(2,minValue); valIndex <= maxValue; valIndex++) {
-				if (!sieve.isSet(valIndex)) {
+				if (sieve.get(valIndex)) {
 					if (printedAValue) {
 						System.out.print("," + valIndex);
 					} else {
@@ -77,19 +79,19 @@ public class Primes {
 		scan.close();
 	}
 
-	private static void sieveProducts(int prodLen, int partialProduct, Sieve sieve, int[] peculiarPrimes) {
+	private static void sieveProducts(int prodLen, long partialProduct, BitSet sieve, int[] peculiarPrimes, int maxValue) {
 		if (prodLen == 1) {
 			for (int p = 0; p < peculiarPrimes.length; p++) {
 				long sieveThisValue = partialProduct * peculiarPrimes[p];
-				if (sieveThisValue > sieve.maxValue) { break; }
+				if (sieveThisValue > maxValue) { break; }
 				// System.out.printf("sieving value %d\n", sieveThisValue);
-				sieve.clearBit((int) sieveThisValue);
+				sieve.set((int) sieveThisValue);
 			}
 		} else {
 			for (int p = 0; p < peculiarPrimes.length; p++) {
 				long nextPartial = partialProduct * peculiarPrimes[p];
-				if (nextPartial <= sieve.maxValue) {
-					sieveProducts(prodLen-1, (int) nextPartial, sieve, peculiarPrimes);
+				if (nextPartial <= maxValue) {
+					sieveProducts(prodLen-1, (int) nextPartial, sieve, peculiarPrimes, maxValue);
 				}
 			}
 		}
