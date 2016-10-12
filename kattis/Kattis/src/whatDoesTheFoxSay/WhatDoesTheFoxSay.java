@@ -35,6 +35,7 @@ public class WhatDoesTheFoxSay {
 				oneLine.next();
 				knownSounds.add(oneLine.next());
 				soundInformation = scan.nextLine();
+				oneLine.close();
 			}
 			recording.removeAll(knownSounds);
 			boolean firstSound = true;
