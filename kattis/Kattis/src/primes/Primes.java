@@ -1,36 +1,32 @@
 package primes;
 
 import java.io.BufferedInputStream;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.BitSet;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Scanner;
 
 public class Primes {
 
 	private class Sieve {
 		byte [] store;
-		int offset;
-		int maxValue;
+		private long offset;
+		private long maxValue;
 		
-		Sieve (int offset, int maxValue) {
-			int capacity = maxValue - offset;
-			store = new byte [(capacity + 8) / 8];
-			Arrays.fill(store, (byte) 0xFF);
+		Sieve (long offset, long maxNumberOfBits) {
+			long capacity = maxNumberOfBits - offset;
+			store = new byte [(int) (capacity / 8)+1];
+			Arrays.fill(store, (byte) 0x00);
 			this.offset = offset;
-			this.maxValue = maxValue;
+			this.maxValue = maxNumberOfBits;
 		}
 		
-		void clearBit(int bitIndex) {
-			if (bitIndex >= offset && bitIndex <= maxValue) {
-				store[((bitIndex - offset) / 8)] &= ~(1 << ((bitIndex - offset) % 8));
+		void set(int bitIndex) {
+			if (bitIndex >= offset && bitIndex < maxValue) {
+				store[(int)((bitIndex - offset) / 8)] |= (1 << ((bitIndex - offset) % 8));
 			}
 		}
 		
-		boolean isSet(int bitIndex) {
-			return (store[((bitIndex - offset) / 8)] & (1 << ((bitIndex - offset) % 8))) != 0;
+		boolean get(int bitIndex) {
+			return (store[(int)((bitIndex - offset) / 8)] & (1 << ((bitIndex - offset) % 8))) != 0;
 		}
 	}
 	
@@ -49,8 +45,9 @@ public class Primes {
 			scan.nextLine();
 			boolean printedAValue = false;
 
-			BitSet sieve = new BitSet(maxValue);
-			sieve.clear();
+//			BitSet sieve = new BitSet(maxValue);
+//			sieve.clear();
+			Sieve sieve = new Primes().new Sieve(minValue, maxValue + 1);
 			int longestProduct = Math.max(1,(int) Math.ceil(Math.log10(maxValue) / Math.log10(peculiarPrimes[0])));
 			for (int prodLen = 1; prodLen <= longestProduct; prodLen++) {
 				sieveProducts(prodLen, 1, sieve, peculiarPrimes, maxValue);
@@ -79,7 +76,7 @@ public class Primes {
 		scan.close();
 	}
 
-	private static void sieveProducts(int prodLen, long partialProduct, BitSet sieve, int[] peculiarPrimes, int maxValue) {
+	private static void sieveProducts(int prodLen, long partialProduct, Sieve sieve, int[] peculiarPrimes, int maxValue) {
 		if (prodLen == 1) {
 			for (int p = 0; p < peculiarPrimes.length; p++) {
 				long sieveThisValue = partialProduct * peculiarPrimes[p];
@@ -91,11 +88,10 @@ public class Primes {
 			for (int p = 0; p < peculiarPrimes.length; p++) {
 				long nextPartial = partialProduct * peculiarPrimes[p];
 				if (nextPartial <= maxValue) {
-					sieveProducts(prodLen-1, (int) nextPartial, sieve, peculiarPrimes, maxValue);
+					sieveProducts(prodLen-1, nextPartial, sieve, peculiarPrimes, maxValue);
 				}
 			}
 		}
 		
 	}	
 }
-

@@ -5,8 +5,6 @@ import static org.junit.Assert.*;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.Arrays;
-
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 

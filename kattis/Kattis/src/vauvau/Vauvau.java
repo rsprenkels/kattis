@@ -33,7 +33,7 @@ public class Vauvau {
 				System.out.print("one\n");				
 			}
 		}
-		
+		scan.close();
 	}
 }
 

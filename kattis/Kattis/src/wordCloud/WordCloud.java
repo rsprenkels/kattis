@@ -28,7 +28,6 @@ public class WordCloud {
 			int lineWidth = 0;
 			int lineHeight = 0;
 			int cloudHeight = 0;
-			boolean firstWord = true;
 			for (int wordNumber = 0; wordNumber < n; wordNumber++ ) {
 				Word word = words[wordNumber];
 				int wordPointsize = 8 + (int) Math.ceil((40.0 * (word.getCount() - 4.0)) / (maxCount - 4.0));
