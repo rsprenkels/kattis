@@ -2,21 +2,11 @@ package whatDoesTheFoxSay;
 
 import java.io.BufferedInputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
 public class WhatDoesTheFoxSay {
-	
-	static HashMap<Character, Character> convert;
-	static {
-		convert = new HashMap<Character, Character>(5);
-		convert.put(' ', ' ');
-		convert.put('+', '+');
-		convert.put('-', '|');
-		convert.put('|', '-');
-	}
-		
+			
 	public static void main(String [] args) {
 		Scanner scan = new Scanner(new BufferedInputStream(System.in));
 
