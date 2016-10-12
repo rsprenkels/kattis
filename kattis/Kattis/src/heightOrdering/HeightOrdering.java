@@ -1,11 +1,6 @@
 package heightOrdering;
 
 import java.io.BufferedInputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.BitSet;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Scanner;
 
 public class HeightOrdering {
