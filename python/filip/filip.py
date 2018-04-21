@@ -1,7 +1,10 @@
-def filip():
-    num1, num2 = map(int, input().split())
-    print(num1)
-    print(num2)
+class filip:
 
+    def giveLargest(self, first, second):
+        if(first > second):
+            return first
+        else:
+            return second
 
-filip()
+if __name__ == '__main__':
+    filip().giveLargest(3,2)
