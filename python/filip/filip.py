@@ -1,10 +1,11 @@
 class filip:
 
-    def giveLargest(self, first, second):
+    def giveLargest(self):
+        first, second = input().split(' ')
         if(first > second):
             return first
         else:
             return second
 
 if __name__ == '__main__':
-    filip().giveLargest(3,2)
+    print(filip().giveLargest())
