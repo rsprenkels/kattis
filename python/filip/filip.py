@@ -2,7 +2,8 @@ class filip:
 
     def giveLargest(self):
         first, second = input().split(' ')
-        if(first > second):
+        first, second = first[::-1], second[::-1]
+        if(int(first) > int(second)):
             return first
         else:
             return second
