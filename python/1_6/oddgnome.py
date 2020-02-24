@@ -1,4 +1,4 @@
-# https://open.kattis.com/problems/oddgnome
+# https://open.katt is.com/problems/oddgnome
 
 def oddgnome(gnome_list):
     for index in range(1, len(gnome_list)):
