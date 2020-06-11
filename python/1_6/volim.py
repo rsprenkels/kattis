@@ -17,11 +17,8 @@ def volim(K, answers):
 def test_1():
     assert volim(1, [(20, 'T'), (50, 'T'), (80, 'T'), (50, 'T'),(30, 'T')]) == 5
 
-
-
 def test_2():
     assert volim(3, [(100, 'T'), (100, 'N'), (100, 'T'), (100, 'T'),(100, 'N'),]) == 4
-
 
 if __name__ == '__main__':
     inital_player = int(input())

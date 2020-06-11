@@ -22,7 +22,6 @@ def test_1():
 def test_2():
     assert hangman('BANANA', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ') == 'LOSE'
 
-
 if __name__ == '__main__':
     word = input()
     guesses = input()
