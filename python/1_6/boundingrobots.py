@@ -19,7 +19,7 @@ class Point:
     
         
     def __repr__(self):
-        return f"Point({self.x},{self.y})"
+        return f"{self.x} {self.y}"
 
 def simulation(room_dimensions: Tuple[int, int],
                movements: Sequence[Tuple[str, int]]) -> Tuple[Point, Point]:
@@ -52,8 +52,8 @@ while True:
     for _ in range(num_moves):
         dir, dist = input().split()
         moves.append((dir, int(dist)))
-    result = simulation((width, length), moves)
-    print(f"Robot thinks {result[0].x} {result[0].y}")
-    print(f"Actually at {result[1].x} {result[1].y}")
+    thinks, actually = simulation((width, length), moves)
+    print(f"Robot thinks {thinks}")
+    print(f"Actually at {actually}")
     
-    
+# from 363.6 rank 1053 to 365.2 rank 1043    
