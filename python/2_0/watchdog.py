@@ -38,18 +38,14 @@ def multisort(xs, specs):
 
 
 def watchdog(roof_size: int, hatches : Sequence[Point]) -> Tuple[bool, Point]:
-    hook_options = []
     for x in range(1, roof_size):
         for y in range(1, roof_size):
             candidate = Point(x, y)
             if candidate not in hatches:
                 longest_leash = max([candidate.dist(h) for h in hatches])
                 if candidate.x >= longest_leash and candidate.x <= roof_size - longest_leash and candidate.y >= longest_leash and candidate.y <= roof_size - longest_leash:
-                    hook_options.append(candidate)
-    if hook_options:
-        return (True, hook_options[0])
-    else:
-        return (False, Point(0,0))
+                    return (True, candidate)
+    return (False, Point(0,0))
     
 assert watchdog(10, [Point(6,6), Point(5,4)]) == (True, Point(3, 6))
 
