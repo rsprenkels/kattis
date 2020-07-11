@@ -47,9 +47,9 @@ def watchdog(roof_size: int, hatches : Sequence[Point]) -> Tuple[bool, Point]:
                     return (True, candidate)
     return (False, Point(0,0))
     
-assert watchdog(10, [Point(6,6), Point(5,4)]) == (True, Point(3, 6))
+# assert watchdog(10, [Point(6,6), Point(5,4)]) == (True, Point(3, 6))
 
-assert watchdog(20, [Point(1,1), Point(19,19)]) == (False, Point(0, 0))
+# assert watchdog(20, [Point(1,1), Point(19,19)]) == (False, Point(0, 0))
 
 for _ in range(int(input())):
     roof_size, num_hathes = map(int, input().split())
