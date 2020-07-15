@@ -7,7 +7,8 @@ def secretmessage(message: str) -> str:
     result = []
     for col in range(rowlen):
         for row in range(rowlen - 1, -1, -1):
-            if (c := message[row * rowlen + col]) != '*':
+            c = message[row * rowlen + col]
+            if c != '*':
                 result.append(c)
     return ''.join(result)
 
@@ -21,3 +22,4 @@ if __name__ == '__main__':
     for num_messages in range(int(input())):
         print(secretmessage(input()))
 
+# from 394.3 rank 948 to 396.0 rank 946
