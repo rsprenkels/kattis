@@ -19,4 +19,4 @@ if __name__ == '__main__':
     else:
         print('gunilla has a point')
 
-# from 438.5 rank 832 to
+# from 438.5 rank 832 to 440.0 rank 831
