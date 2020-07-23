@@ -17,4 +17,4 @@ if __name__ == '__main__':
 
 # needed https://www.geeksforgeeks.org/nth-rational-number-in-calkin-wilf-sequence/ to solve it
 
-# from 442.1 rank 827 to
+# from 442.1 rank 827 to 443.8 rank 821
