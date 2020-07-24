@@ -1,19 +1,17 @@
 import copy
 from typing import Sequence
-from dataclasses import dataclass, field
 
+class Ingredient():
+    def __init__(self, name: str, weight: float, percentage: float):
+        self.name = name
+        self.weight = weight
+        self.percentage = percentage
 
-@dataclass
-class Ingredient:
-    name: str
-    weight: float
-    percentage: float
-
-@dataclass
-class Recipe:
-    portions: int = 0
-    desired: int = 0
-    ingredients: Sequence[Ingredient] = field(default_factory=list)
+class Recipe():
+    def __init__(self, portions: int, desired: int, ingredients: Sequence[Ingredient]):
+        self.portions = portions
+        self.desired = desired
+        self.ingredients = ingredients
 
 def scale(recipe: Recipe) -> Recipe:
     main_ingredient = [ingredient for ingredient in recipe.ingredients if ingredient.percentage == 100.0][0]
@@ -36,7 +34,7 @@ def test_scale():
 if __name__ == '__main__':
     for case_no in range(int(input())):
         num_ingredients, portions, desired = map(int, input().split())
-        r = Recipe(portions=portions, desired=desired)
+        r = Recipe(portions=portions, desired=desired, ingredients=[])
         for _ in range(num_ingredients):
             name, weight, percentage = input().split()
             r.ingredients.append(Ingredient(name, float(weight), float(percentage)))
@@ -44,3 +42,6 @@ if __name__ == '__main__':
         for ingredient in scale(r).ingredients:
             print(f'{ingredient.name} {ingredient.weight:.1f}')
         print('-' * 40)
+
+# backported from python 3.8 to python 3.6.9
+# from 445.4 rank 814 to 447.2 rank 810
