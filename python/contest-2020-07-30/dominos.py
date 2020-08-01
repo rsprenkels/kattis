@@ -1,26 +1,4 @@
-from collections import defaultdict
-from typing import Sequence, Tuple, List, Set
-
-
-def dominos_try1(numtiles: int, vertices: Sequence[Tuple[int, int]]) -> int:
-    knocks_over = dict()
-    knocked_over_by = dict()
-    for a, b in vertices:
-        knocks_over[a] = b
-        knocked_over_by[b] = a
-    need_falling = {n for n in range(1, numtiles + 1)}
-    knocks_needed = 0
-    while need_falling:
-        knocks_needed += 1
-        find_root = next(iter(need_falling))
-        while find_root in knocked_over_by:
-            find_root = knocked_over_by[find_root]
-        root = find_root
-        need_falling.remove(root)
-        while root in knocks_over:
-            root = knocks_over[root]
-            need_falling.remove(root)
-    return knocks_needed
+from typing import Sequence, Tuple
 
 def dominos(num_tiles: int, vertices: Sequence[Tuple[int, int]]) -> int:
     knocks_over = dict()
@@ -32,8 +10,7 @@ def dominos(num_tiles: int, vertices: Sequence[Tuple[int, int]]) -> int:
     knocks_needed = 0
     while need_falling:
         knocks_needed += 1
-        start_up = start_down = next(iter(need_falling))
-        need_falling.remove(start_up)
+        start_up = start_down = need_falling.pop()
         while start_up in knocked_over_by:
             start_up = knocked_over_by[start_up]
             need_falling.remove(start_up)
@@ -46,7 +23,15 @@ def test_1():
     assert dominos(3, [(1, 2), (2, 3)]) == 1
 
 def test_2():
-    assert dominos(5, [(4, 5), (2, 3), (1, 2), ]) == 2
+    assert dominos(6, [(4, 5), (2, 3), (1, 2), ]) == 3
+    assert dominos(6, [(2, 3), (1, 2), ]) == 4
+    assert dominos(6, [(2, 3), (1, 2), (4, 5), ]) == 3
+
+def test_3():
+    assert dominos(0, [ ]) == 0
+
+def test_4():
+    assert dominos(6, []) == 6
 
 if __name__ == '__main__':
     for _ in range(int(input())):
