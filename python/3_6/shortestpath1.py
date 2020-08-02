@@ -5,13 +5,12 @@ from typing import Sequence, Tuple, Set, DefaultDict, Dict
 def sp1(num_nodes: int, edges: Sequence[Tuple[int, int, int]], start_node: int, queries: Sequence[int]) -> Sequence[Tuple[bool, int]]:
     tree: DefaultDict[Set[Tuple[int, int]]] = defaultdict(set)
     Q: Set[int] = set()
-    dist: Dict[int] = {}
+    dist: Sequence[int] = [999999999999999] * num_nodes
     for edge in edges:
         a, b, cost = edge
         tree[a].add((b, cost))
     for n in range(num_nodes):
         Q.add(n)
-        dist[n] = 999999999999999
     dist[start_node] = 0
 
     while Q:
@@ -34,6 +33,10 @@ def test_1():
     start_node = 0
     queries = [0, 1, 2, 3]
     assert sp1(4, edges, start_node, queries) == [(True, 0), (True, 2), (True, 4), (False, 0)]
+
+def test_2()
+    # look at https://networkx.github.io/documentation/stable/tutorial.html
+    pass
 
 if __name__ == '__main__':
     while True:
