@@ -1,36 +1,35 @@
 import sys
-import timeit
 from collections import defaultdict
-from typing import Sequence, Tuple, Set
+from typing import Sequence, DefaultDict, Set
 
+# needed a peek on https://github.com/mpfeifer1/Kattis/blob/master/vivoparc.cpp for algorithm
 
-def g2(n, sees, sofar = None):
-    if sofar == None:
-        sofar = {}
-    if n > 1:
-        nxt = len(sofar) + 1
-        nxt_seen_by = [k for k in sees if nxt in sees[k]]
-        d = [sofar[k] for k in nxt_seen_by if k in sofar]
-        opts = [x for x in range(1, 5) if x not in d]
-        for x in opts:
-            yield from g2(n - 1, sees, {**sofar,  **{len(sofar) + 1 : x}})
+def solve(n: int, sees: Sequence[DefaultDict[int, Set]], animals: Sequence[int]) -> Sequence[int]:
+    if n > len(animals):
+        yield animals
     else:
-        nxt = len(sofar) + 1
-        nxt_seen_by = [k for k in sees if nxt in sees[k]]
-        d = [sofar[k] for k in nxt_seen_by if k in sofar]
-        opts = [x for x in range(1, 5) if x not in d]
-        for x in opts:
-            yield list({**sofar,  **{len(sofar) + 1 : x}}.values())
+        for animal in range(1, 5):
+            still_okay = True
+            for look_back_at in sees[n]:
+                if look_back_at >= n:
+                    continue
+                if animals[look_back_at - 1] == animal:
+                    still_okay = False
+                    break
+            if still_okay:
+                animals[n - 1] = animal
+                yield from solve(n + 1, sees, animals)
 
-def vivoparc(n: int, restrictions: Sequence[Tuple[int, int]]) -> Sequence[int]:
+def vivoparc_elimination(n: int, restrictions, animals):
     sees = defaultdict(set)
     for r in restrictions:
         sees[r[0]].add(r[1])
         sees[r[1]].add(r[0])
-    return next(g2(n, sees))
+    return next(solve(1, sees, animals))
 
-def test_1():
+def test_2():
     n = 8
+    animals = [0] * n
     restrictions = [tuple(map(int, s.split('-'))) for s in """
 1-2
 3-1
@@ -53,12 +52,19 @@ def test_1():
 5-6
 7-8
 """[1:-1].split('\n')]
-    assert vivoparc(n, restrictions) == [1,2,3,4,3,2,3,2]
+    assert vivoparc_elimination(n, restrictions, animals) == [1, 2, 3, 4, 3, 2, 3, 2]
+
+def test_1():
+    n = 8
+    animals = [0] * n
+    restrictions = []
+    assert vivoparc_elimination(n, restrictions, animals) == [1, 1, 1, 1, 1, 1, 1, 1]
 
 if __name__ == '__main__':
     n = int(input())
+    animals = [0] * n
     restrictions = []
     for line in sys.stdin:
         restrictions.append(tuple(map(int, line.split('-'))))
-    for ndx, v in enumerate(vivoparc(n, restrictions), start=1):
+    for ndx, v in enumerate(vivoparc_elimination(n, restrictions, animals), start=1):
         print(f'{ndx} {v}')
