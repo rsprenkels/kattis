@@ -1,3 +1,5 @@
+import sys
+from collections import defaultdict
 from typing import Sequence
 
 
@@ -5,14 +7,25 @@ def notamused(lines: Sequence[str]) -> Sequence[str]:
     day = 1
     output = []
     while lines:
-        enter_time = dict()
-        exit_time = dict()
+        enter_time = defaultdict(list)
+        exit_time = defaultdict(list)
         lines.pop(0)
-        while lines[0] != 'CLOSE':
-            event = lines.pop(0)
-        output.append(nextline)
+        while lines[0][:5] != 'CLOSE':
+            what, who, when = lines.pop(0).split()
+            if what == 'ENTER':
+                enter_time[who].append(int(when))
+            else:
+                exit_time[who].append(int(when))
+        lines.pop(0)
+        output.append(f'Day {day}')
+        day += 1
+        for name in sorted(enter_time.keys()):
+            total_time = sum([exit_time[name][x] - enter_time[name][x] for x in range(len(enter_time[name]))])
+            output.append(f'{name} ${total_time / 10:.2f}')
+        output.append('')
     return output
 
+# from 485.1 rank 733
 
 def test_1():
     lines = """
@@ -29,7 +42,7 @@ EXIT Sam 20
 EXIT Alice 35
 ENTER Sam 700
 EXIT Sam 710
-CLOSE    
+CLOSE
 """[1:-1].split('\n')
 
     expected = """
@@ -44,3 +57,8 @@ Sam $2.50
 
     assert notamused(lines) == expected
 
+if __name__ == '__main__':
+    lines = []
+    for line in sys.stdin:
+        lines.append(line)
+    print('\n'.join(notamused(lines)))
