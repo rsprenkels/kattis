@@ -24,7 +24,7 @@ def redrover(message: str) -> int:
         savings = [((len(k) - 1) * codebook[k] - len(k), k) for k in codebook.keys()]
         if len(savings) > 0:
             cur_saving = max(savings)
-            if cur_saving > best_saving:
+            if cur_saving[0] > best_saving[0]:
                 best_saving = cur_saving
     freq, code = best_saving
     return len(message) - freq * (len(code) - 1) + len(code)
