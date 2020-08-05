@@ -15,14 +15,19 @@ def combi_generator(message, chuncks: Sequence[str]):
 
 def redrover(message: str) -> int:
     combinations = []
-    shortest_code = len(message)
+    best_saving = (0, '')
     for combi in combi_generator(message, []):
         codebook = defaultdict(int)
         for part in combi:
             if len(part) > 1:
                 codebook[part] += 1
-        max_saving = max([len(k) for k in codebook.keys()])
-
+        savings = [((len(k) - 1) * codebook[k] - len(k), k) for k in codebook.keys()]
+        if len(savings) > 0:
+            cur_saving = max(savings)
+            if cur_saving > best_saving:
+                best_saving = cur_saving
+    freq, code = best_saving
+    return len(message) - freq * (len(code) - 1) + len(code)
 
 def test_1():
     assert redrover('WNEENWEENEENE') == 10
@@ -34,3 +39,16 @@ def test_2():
 
 def test_3():
     assert redrover('EEEEEEEEE') == 6
+
+
+def test_4():
+    assert redrover('S') == 1
+    assert redrover('SS') == 2
+    assert redrover('SSS') == 3
+
+
+def test_5():
+    assert redrover('SSSS') == 4
+
+if __name__ == '__main__':
+    print(redrover(input()))
