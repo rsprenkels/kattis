@@ -5,7 +5,6 @@ import math
 
 def solution(a: int, b: int, c:int, d:int) -> float:
     s = (a + b + c + d) / 2 # semi_perimeter
-
     return math.sqrt((s - a) * (s - b) * (s - c) * (s - d))
 
 def test_1():
