@@ -1,7 +1,15 @@
 import sys
+import re
 from typing import List, Tuple
 
 def solution(pattern: str, text: str) -> str:
+    locations = []
+    for ndx in range(len(text) - len(pattern) + 1):
+        if text[ndx:].startswith(pattern):
+            locations.append(ndx)
+    return ' '.join((str(x) for x in locations))
+
+def solution_first(pattern: str, text: str) -> str:
     locations = []
     search_from = 0
     while (found_at := text.find(pattern, search_from)) != -1:
