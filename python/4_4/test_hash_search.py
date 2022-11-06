@@ -1,13 +1,14 @@
-# original authors: https://www.geeksforgeeks.org/python-program-for-rabin-karp-algorithm-for-pattern-searching/
+# Following program is the python implementation of
+# Rabin Karp Algorithm given in CLRS book
 
-import sys
-import re
-from typing import List, Tuple
+# d is the number of characters in the input alphabet
+d = 256
 
-def solution(pat: str, txt: str) -> str:
-    d = 256
-    locations = []
-    q = 101
+# pat -> pattern
+# txt -> text
+# q -> A prime number
+
+def search(pat, txt, q):
     M = len(pat)
     N = len(txt)
     i = 0
@@ -40,8 +41,7 @@ def solution(pat: str, txt: str) -> str:
             j+= 1
             # if p == t and pat[0...M-1] = txt[i, i + 1, ...i + M-1]
             if j == M:
-                locations.append(i)
-                # print("Pattern found at index " + str(i))
+                print("Pattern found at index " + str(i))
 
         # Calculate hash value for next window of text: Remove
         # leading digit, add trailing digit
@@ -52,15 +52,11 @@ def solution(pat: str, txt: str) -> str:
             # positive
             if t < 0:
                 t = t + q
-    return ' '.join((str(x) for x in locations))
 
-def solution_own(pattern: str, text: str) -> str:
-    return ' '.join((str(ndx) for ndx, c in enumerate(list(text)) if text[ndx:].startswith(pattern)))
+# Driver program to test the above function
+txt = "GEEKS FOR GEEKS"
+pat = "GEEK"
+q = 101 # A prime number
+search(pat, txt, q)
 
-def test_1():
-    assert solution('p', 'Popup') == '2 4'
-
-if __name__ == '__main__':
-    while first_line := sys.stdin.readline().rstrip('\n'):
-        second_line = sys.stdin.readline().rstrip('\n')
-        print(solution(first_line, second_line))
+# This code is contributed by Bhavya Jain
