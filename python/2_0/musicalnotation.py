@@ -18,13 +18,12 @@ def solution (notes: str) -> List[str]:
         for duration in range(reps):
             for dur_ndx, c in enumerate(col):
                 rows[dur_ndx].append(c)
-        if ndx < len(notes.split(' ')) - 1:
-            for ndx, c in enumerate(empty_col):
-                rows[ndx].append(c)
+        for ndx, c in enumerate(empty_col):
+            rows[ndx].append(c)
 
     res = []
     for r in reversed(rows):
-        res.append(''.join(r))
+        res.append(''.join(r[:-1]))
     return res
 
 
