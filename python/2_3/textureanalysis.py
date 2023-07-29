@@ -1,3 +1,5 @@
+# https://open.kattis.com/problems/textureanalysis
+
 def is_evenly_spaced(line: str) -> bool:
     dots = [len(p) for p in line[1:-1].split('*')]
     min_len = min(dots)
